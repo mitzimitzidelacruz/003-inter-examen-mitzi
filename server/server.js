@@ -65,7 +65,7 @@ mongoose.connect('mongodb://localhost:27017/intercuatri', {
   useFindAndModify: false
 }, (err, res) => {
  if (err) throw err;
- console.log('Base de datos ONLINE');
+ console.log('Base de datos ONLINE activa');
 });
 
 app.listen(process.env.PORT, () => {

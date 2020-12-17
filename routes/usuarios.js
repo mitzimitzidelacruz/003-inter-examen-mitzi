@@ -23,7 +23,7 @@ const app = express();
     // Respuesta exitosa:
     res.json({
     ok:true,
-    msg:'Lista de usuarios obtenida con éxito.',
+    msg:'Lista de usuarios bien.',
     conteo:usuarios.length,
     usuarios
             });
@@ -53,7 +53,7 @@ const app = express();
     }
     res.json({
     ok:true,
-    msg:'Usuario insertado con exito.',
+    msg:'Usuario insertado bien.',
     usrDB
             });
         });
@@ -76,7 +76,7 @@ const app = express();
       
                   res.json({
                       ok: true,
-                      msg: 'Usuario actualizado con exito',
+                      msg: 'Usuario actualizado bien',
                       usuario: usrDB
                   });
               });

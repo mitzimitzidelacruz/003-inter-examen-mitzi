@@ -5,19 +5,19 @@ let Schema = mongoose.Schema;
 let usuarioSchema = new Schema({
     nombre: {
         type: String,
-        required: [true, 'El nombre es necesario.']
+        required: [true, 'Tu nombre es necesario.']
     },
     primerApellido: {
         type: String,
-        required: [true, 'El primer apellido necesario.']
+        required: [true, 'Tu primer apellido es necesario.']
     },
     segundoApellido: {
         type: String,
-        required: [true, 'El segundo apellido es  Paterno necesario.']
+        required: [true, 'Tu segundo apellido Paterno es necesario.']
     },
     edad:{
         type: Number,
-        required: [true, 'La edad es necesaria.']
+        required: [true, 'Tu edad es necesaria.']
     },
     curp:{
         type: String,
@@ -25,7 +25,7 @@ let usuarioSchema = new Schema({
     },
     telefono:{
         type: Number,
-        required: [true, 'El numero telefonico es necesario']
+        required: [true, 'Tu numero telefonico es necesario']
     },
     email:{
         type: String,

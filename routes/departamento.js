@@ -16,14 +16,14 @@ const app = express();
     if (err) {
         return res.status(400).json({
         ok:false,
-        msg:'Ocurrio un error de consultar.',
+        msg:'Ocurrio un error al tratar de consultar.',
         err
             });
             }
     // Respuesta exitosa:
     res.json({
     ok:true,
-    msg:'Lista de empleados obtenida con éxito.',
+    msg:'La lista de empleados ha sido obtenida con éxito.',
     conteo:empleados.length,
     empleados
             });
@@ -45,13 +45,13 @@ const app = express();
     if (err){
     return res.status(400).json({
         ok:false,
-        msg:'Ocurrio un error.',
+        msg:'Ocurrio un error :().',
         err
         });
     }
     res.json({
     ok:true,
-    msg:'Empleado insertado con exito.',
+    msg:'El empleado ha sido insertado con exito.',
     usrDB
             });
         });
@@ -71,6 +71,7 @@ const app = express();
                           err
                       });
                   }
+
       
                   res.json({
                       ok: true,
@@ -79,6 +80,8 @@ const app = express();
                   });
               });
       });
+
+
 
       app.delete('/empleado/:id', function(req, res){
         let id = req.params.id;
@@ -94,7 +97,7 @@ const app = express();
                 }
                 res.json({
                   ok: true,
-                  msg: 'empleado eliminado exitosamente.',
+                  msg: 'El empleado a sido eliminado exitosamente.',
                   usrDB 
                 });
         });
