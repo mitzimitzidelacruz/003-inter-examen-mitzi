@@ -1,5 +1,7 @@
-// require ('./config/config.js');
-const express = require ('express');    
+require ('../server/config/config');
+
+const express = require ('express');
+const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
 const app = express();
 
@@ -10,12 +12,11 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
  
 
+app.use(require('../models/usuario'));
 
 app.get('/', function (req, res) {
     res.send('Hola mundo');
   });
-
-  //aqui empieza el get YA LO TENGOO
   app.get('/usuario', function (req, res){
     res.json({
         ok: 200, 
@@ -23,7 +24,6 @@ app.get('/', function (req, res) {
     })
 })
  
-   //aqui se pone el delete
    app.delete ('/usuario/:id', function (req, res){ 
 let id = req.params.id
 
@@ -34,7 +34,6 @@ res.json({
 })
 })
 
-//este es el post YA LO TENGO
 app.post('/usuario', function (req, res){
     let nombre = req.body.nombre;
     let body = req.body;
@@ -44,20 +43,28 @@ app.post('/usuario', function (req, res){
        body:body 
     })
 })
-     //aqui se pone el put YA LO TENGO
-     app.put('/usuario', function (req, res){
-      
-        let body = req.body;
-        res.json({  
-            ok: 200,
-            mensaje: 'Usuario actualizado con exito',
-            body:body 
-            
-
-        })          
+app.put('/usuario', function (req, res){
+    let id = req.params.id
+    let nombre = req.params.nombre;
+    res.json({
+        ok: 200,
+        mensaje: 'Usuario actualizado con exito',
+        id: id,
+        nombre: nombre
     })
+})
 
+// Conexión a la base de datos Mongoose:
+mongoose.connect('mongodb://localhost:27017/intercuatri', {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false
+}, (err, res) => {
+ if (err) throw err;
+ console.log('Base de datos ONLINE');
+});
 
-  app.listen(3000, () => {
-      console.log('El servidor esta en la linea por el puerto 3000')
-  });
+app.listen(process.env.PORT, () => {
+  console.log('El servidor esta en linea por el puerto', process.env.PORT);
+});
