@@ -1,19 +1,20 @@
 const express = require('express');
 const _ = require('underscore');
+//este no me sirve
 // const usuario = require('../models/usuario');
-const Departamento = require('../models/departamento');
+const Empleado = require('../models/empleado');
 const app = express();
  
-    app.get('/departamento', function (req, res) {
+    app.get('/empleado', function (req, res) {
     // Ordenar:
     let desde = req.query.desde || 0;
     let hasta = req.query.hasta || 5;
- 
-    Departamento.find({ estado:true })
+    
+    Empleado.find({ estado:true })
         .skip(Number(desde))
-        .limit(Number(hasta))
-        .populate('empleado', 'nombredepuesto anosdeservicio')
-        .exec((err, departamentos) => {
+        .limit(Number(hasta)) 
+        .populate('usuario', 'nombre mail')
+        .exec((err, empleados) => {
     if (err) {
         return res.status(400).json({
         ok:false,
@@ -22,26 +23,30 @@ const app = express();
             });
             }
     // Respuesta exitosa:
+
+
     res.json({
     ok:true,
-    msg:'Se obtuvo la lista bien .',
-    conteo:departamentos.length,
-    departamentos
+    msg:'Lista de empleados obtenida con éxito.',
+    conteo:empleados.length,
+    empleados
             });
         });
     });
  
-    app.post('/departamento', function(req, res){
+    app.post('/empleado', function(req, res){
         let body = req.body;
-        let dpto = new Departamento({
-            nombre: body.nombre,
-            id_jefe_de_area: body.id_jefe_de_area,
-            numero_deempleado: body.numero_deempleado,
-            extension_tel: body.extension_tel
+        let usr = new Empleado({
+        nombredepuesto: body.nombredepuesto,
+        anosdeservicio: body.anosdeservicio,
+        hora_entrada: body.hora_entrada,
+        hora_salida:body.hora_salida,
         
     });
         
-    dpto.save((err, dptoDB) => {
+    usr.save((err, usrDB) => {
+
+
     // Si hubo algún error:
     if (err){
     return res.status(400).json({
@@ -52,19 +57,19 @@ const app = express();
     }
     res.json({
     ok:true,
-    msg:'Departamento insertado muy bien.',
-    dptoDB
+    msg:'Se a insertado un empleado con exito.',
+    usrDB
             });
         });
  
         });
  
-        app.put('/departamento/:id', function(req, res) {
+        app.put('/empleado/:id', function(req, res) {
           let id = req.params.id;
-          let body = _.pick(req.body, [,'id_jefe_de_area','nombre', 'numero_de_empleado', 'extension_tel']);
+          let body = _.pick(req.body, ['nombredepuesto','anosdeservicio', 'hora_entrada', 'hora_salida']);
       
-          Departamento.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' },
-              (err, dptoDB) => {
+          Empleado.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' },
+              (err, usrDB) => {
                   if (err) {
                       return res.status(400).json({
                           ok: false,
@@ -75,17 +80,17 @@ const app = express();
       
                   res.json({
                       ok: true,
-                      msg: 'Departamento actualizado con exito',
-                      departamento: dptoDB
+                      msg: 'Usuario actualizado muy bien',
+                      usuario: usrDB
                   });
               });
       });
 
-      app.delete('/departamento/:id', function(req, res){
+      app.delete('/empleado/:id', function(req, res){
         let id = req.params.id;
     
-        Departamento.findByIdAndUpdate(id, {estado: false }, {new: true, runValidators: true, context: 'query'},
-        (err, dptoDB) =>{
+        Usuario.findByIdAndUpdate(id, {estado: false }, {new: true, runValidators: true, context: 'query'},
+        (err, usrDB) =>{
           if (err){
                   return res.status(400).json({
                     ok: false,
@@ -95,8 +100,8 @@ const app = express();
                 }
                 res.json({
                   ok: true,
-                  msg: 'Departamento eliminado muy bien.',
-                  dptoDB 
+                  msg: 'empleado eliminado muy bien .',
+                  usrDB 
                 });
         });
       });
