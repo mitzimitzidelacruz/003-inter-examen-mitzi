@@ -1,5 +1,4 @@
-require ('../server/config/config');
-
+require ('./config/config.js');
 const express = require ('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
@@ -13,9 +12,12 @@ app.use(bodyParser.json())
  
 
 app.use(require('../models/usuario'));
+app.use(require('../models/usuario'));
+//esto no importa
+// app.use(require('./routes/departamento'));
 
 app.get('/', function (req, res) {
-    res.send('Hola mundo');
+    res.send('Hola mundo, soy mitzi');
   });
   app.get('/usuario', function (req, res){
     res.json({
@@ -53,6 +55,7 @@ app.put('/usuario', function (req, res){
         nombre: nombre
     })
 })
+
 
 // Conexión a la base de datos Mongoose:
 mongoose.connect('mongodb://localhost:27017/intercuatri', {
