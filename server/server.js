@@ -15,44 +15,47 @@ app.get('/', function (req, res) {
     res.send('Hola mundo');
   });
 
-  //aqui empieza el get
-  app.get   ('/usuario', function (req, res){
+  //aqui empieza el get YA LO TENGOO
+  app.get('/usuario', function (req, res){
     res.json({
         ok: 200, 
         mensaje:'Usuario consultado'
     })
 })
-  app.get('/saludo', function (req, res) {
-    res.json({
-ok: '200',
-mensaje: 'bienvenida mitzi'
-    })
-  });
-//este es el post
-   app.post('/usuario', function (req, res){
-       let nombre = req.body.nombre;
-       let body = req.body;
-       res.json({
-           ok: 200, 
-           mensaje:'Usuario insertado bien',
-          body:body 
-       })
-  })
+ 
    //aqui se pone el delete
+   app.delete ('/usuario/:id', function (req, res){ 
+let id = req.params.id
 
+res.json({
+    ok: 200,
+    mensaje: 'Usuario eliminado bien',
+    id: id
+})
+})
 
-
-   //aqui se pone el put
-   app.put('/usuario/:id/:nombre ', function (req, res){
-    let id = req.params.id
-    let nombre = req.params.nombre;
+//este es el post YA LO TENGO
+app.post('/usuario', function (req, res){
+    let nombre = req.body.nombre;
+    let body = req.body;
     res.json({
-        ok: 200,
-        mensaje: 'Usuario actualizado con exito',
-        id: id,
-        nombre: nombre
+        ok: 200, 
+        mensaje:'Usuario insertado bien',
+       body:body 
     })
 })
+     //aqui se pone el put YA LO TENGO
+     app.put('/usuario', function (req, res){
+      
+        let body = req.body;
+        res.json({  
+            ok: 200,
+            mensaje: 'Usuario actualizado con exito',
+            body:body 
+            
+
+        })          
+    })
 
 
   app.listen(3000, () => {
